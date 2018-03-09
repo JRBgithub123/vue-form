@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>123</title>
+	<style type="text/css">
+	.form{
+			display: block;
+			width:400px;
+			height:400px;
+			margin:100px auto;
+			border:1px solid #ccc;
+			border-radius:10px;
+			background:#333;
+	}
+	.form p{
+		width:80%;
+		margin:20px auto;
+	}
+	.form p label{
+		display: inline-block;
+		width:50px;
+		color:#fff;
+	}
+	.form p input{
+			width:200px;
+			background-color:transparent;
+			height:20px;
+			border-radius: 4px;
+			color:#fff;
+			padding-left:10px;
+	}
+	.form p input::placeholder{
+			color:rgba(255,255,255,.5);
+	}
+	.form p textarea{
+			display: inline-block;
+			width:210px;
+			background-color: transparent;
+			outline: none;
+			color:#fff;
+			border-radius:0.2rem;
+			padding:0.2rem;
+			box-sizing:border-box;
+	}
+	.form p select{
+		width:210px;
+		background-color:transparent;
+	}
+		button{
+			display: block;
+			outline: none;
+			width:100px;
+			height:30px;
+			border-radius: 5px;
+			background: #ccc;
+			cursor: pointer;
+			margin:0 auto;
+		}
+		button.active{
+				background: blue;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div  class="form" action="">
+			<p class="name">
+				<label for="name">姓名:</label>
+				<input type="text" name="name" id="name" v-model="name" placeholder="请输入姓名">
+			</p>
+			<p class="email">
+				<label for="email">email:</label>
+				<input type="text" name="email" id="email" v-model="email" placeholder="请输入正确的email">
+			</p>
+			<p class="select">
+				<label for="select">序号:</label>
+				<select name="" id="select" v-model="num" :style="{'color':num.length>0?'#fff':'rgba(255,255,255,.5)'}">
+					<option value="" disabled>请输入数字</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+			</p>
+			<p class="textarea">
+				<label for="textarea">留言:</label>
+				<textarea name="advice" rows="8" cols="80" id="advive" placeholder="请输入留言" v-model="advice"></textarea>
+			</p>
+			<button v-if="canSubmit" class="active" @click="submit()">点击</button>
+			<button v-else >点击</button>
+		</div>
+
+		</div>
+	<script type="text/javascript" src="js/vue.2.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.3.1.1.js"></script>
+	<script type="text/javascript">
+	var vm = new Vue({
+		el: '#app',
+		data: {
+				name:"",
+				email:"",
+				num:"",
+				advice:"",
+				userEmail:true
+		},
+		methods:{
+				submit:function () {
+						alert("输入格式正确 请稍等");
+						this.name="";
+						this.email="";
+				}
+		},
+		computed:{
+				canSubmit:function () {
+						//console.log(this.name.length > 0 && this.email.length > 0 && this.num.length > 0 && this.advice.length > 0 && this.userEmail);
+						return this.name.length > 0 && this.email.length > 0 && this.num.length > 0 && this.advice.length > 0
+						&& this.userEmail;
+				}
+		},
+		watch:{
+				email:function () {
+						var emailReg= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+						this.userEmail=emailReg.test(this.email);
+				}
+		}
+
+	})
+
+	</script>
+</body>
+</html>
